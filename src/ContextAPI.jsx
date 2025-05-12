@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { itemList } from "./itemList";
 
+
 export const StoreContext = createContext();
 
 const StoreProvider = (props) => {
@@ -45,6 +46,16 @@ const StoreProvider = (props) => {
     return totalAmount;
   }
 
+  const totalQuantity=()=>{
+    let qtotal=0;
+    for(const i in cartItems){
+      if(cartItems[i]>0){
+        qtotal+=cartItems[i];
+      }
+    }
+    return qtotal;
+  }
+
   const contextValue = {
     itemList,
     cartItems,
@@ -52,7 +63,8 @@ const StoreProvider = (props) => {
     addToCart,
     removeFromCart,
     getTotalAmount,
-    handleDelete
+    handleDelete,
+    totalQuantity
   }
 
   return (

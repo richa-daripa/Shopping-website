@@ -19,11 +19,8 @@ const Cart = () => {
                 <Container className='d-flex justify-content-center align-items-center'>
                     <div className='text-center'>
                         <Navbar.Brand className='h1 fs-2 '>
-                            Your 
-                            <i class="bi bi-cart4 fs-1 mx-2" ></i>
-                            Cart
+                            Your Cart
                         </Navbar.Brand>
-
                     </div>
                 </Container>
             </Navbar>
@@ -31,13 +28,13 @@ const Cart = () => {
             {
                 Object.keys(cartItems).length > 0 ? (
                     <>
-                        <Container className="mt-4 border shadow-sm rounded">
+                        <Container className="mt-4 border shadow-sm rounded " >
                             <h2 className="fs-4 border-bottom border-info-subtle border-3 mb-4 pb-2 pt-4">Items in Cart</h2>
                             <Row lg={1}>
                                 {itemList.filter(item => cartItems[item.id] > 0).map((item, index) => (
                                     <Col md={6} className="mb-3">
                                         <Card className="p-3 d-flex flex-row align-items-center">
-                                            <img src={item.image} alt='' className="me-5" width="150" height="150" />
+                                            <img src={item.image} alt={item.name} className="me-5" width="150" height="150" />
                                             <div className="flex-grow-1">
                                                 <h5>{item.name}</h5>
                                                 <p>Price: ₹ {item.price}</p>
@@ -47,12 +44,14 @@ const Cart = () => {
                                                     <Button variant='outline-secondary bg-body-secondary text-black' className="btn-sm" onClick={() => addToCart(item.id)}><i class="bi bi-plus"></i></Button>
                                                 </div>
                                             </div>
-                                            <Button  className="ms-3 bg-body-secondary text-danger" onClick={() => handleDelete(item.id)}>Remove</Button>
+                                            <Button className="ms-3 bg-body-secondary text-danger" onClick={() => handleDelete(item.id)}>Remove</Button>
                                         </Card>
                                     </Col>
                                 ))}
                             </Row>
                         </Container>
+
+
 
                         <Card style={{ width: '18rem' }} className=' border-success border-2 mt-4'>
                             <Card.Body>
