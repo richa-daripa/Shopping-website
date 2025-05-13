@@ -1,6 +1,6 @@
 import React, { useContext} from 'react';
-import { Card, Col, Button } from 'react-bootstrap';
 import { StoreContext } from './ContextAPI';
+import { Card, Col, Button } from 'react-bootstrap';
 
 const ItemCard = ({ id, name, image, price , setShow}) => {
 

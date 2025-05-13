@@ -1,11 +1,11 @@
 
 import React, { useContext } from 'react';
 import { StoreContext } from './ContextAPI';
-import { Container, Navbar, Button, Row, Col, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { Container, Navbar, Button, Row, Col, Card } from 'react-bootstrap';
 
 const Cart = () => {
-    const { cartItems, itemList, addToCart, removeFromCart, getTotalAmount, handleDelete } = useContext(StoreContext);
+    const { cartItems, itemList, addToCart, removeFromCart, getTotalAmount, handleDelete,totalQuantity } = useContext(StoreContext);
     const navigate = useNavigate();
 
     return (
@@ -29,7 +29,7 @@ const Cart = () => {
                 Object.keys(cartItems).length > 0 ? (
                     <>
                         <Container className="mt-4 border shadow-sm rounded " >
-                            <h2 className="fs-4 border-bottom border-info-subtle border-3 mb-4 pb-2 pt-4">Items in Cart</h2>
+                            <h2 className="fs-4 border-bottom border-info-subtle border-3 mb-4 pb-2 pt-4">Items in Cart - {totalQuantity()}</h2>
                             <Row lg={1}>
                                 {itemList.filter(item => cartItems[item.id] > 0).map((item, index) => (
                                     <Col md={6} className="mb-3">
@@ -62,11 +62,11 @@ const Cart = () => {
                                         <p>₹ {getTotalAmount()} </p></div>
                                     <div className='d-flex justify-content-between'>
                                         <p>Shipping fee :</p>
-                                        <p>₹ 29 </p></div>
+                                        <p>₹ 0 </p></div>
                                 </Card.Text>
                                 <div className='d-flex justify-content-between'>
                                     <p className='fw-bold'>Total Amount:</p>
-                                    <p>₹ {getTotalAmount() + 29} </p></div>
+                                    <p>₹ {getTotalAmount() + 0} </p></div>
                                 <Button variant="success" className='w-100 mt-4'>GO TO CHECKOUT</Button>
                             </Card.Body>
                         </Card>

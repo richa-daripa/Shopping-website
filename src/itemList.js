@@ -3,7 +3,7 @@ export const itemList = [
     id: '1',
     name: 'Electric Kettle',
     image:
-      'https://assets.myntassets.com/w_412,q_60,dpr_2,fl_progressive/assets/images/20106134/2022/9/21/bdbfe71b-0444-4761-8050-be7eeec0b3091663743114012ElectricKettle1.jpg',
+      'https://m.media-amazon.com/images/S/aplus-media-library-service-media/5c2e0e48-fa54-403c-8394-98e20bafe8b7.__CR0,0,300,300_PT0_SX300_V1___.jpg',
     price: 699,
   },
   {
