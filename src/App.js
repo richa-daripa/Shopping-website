@@ -1,16 +1,23 @@
 import React  from 'react';
-import Cart from './Cart';
-import ItemPage from './ItemPage';
+import Cart from './Pages/Cart';
+import ItemPage from './Pages/ItemPage';
 import { Route, Routes } from 'react-router-dom';
+import Checkout from './Pages/Checkout';
+import Footer from './Component/Footer';
 
 
 function App() {
-  
   return (
-      <Routes>
+    <>
+    <Routes>
         <Route path='/' element={<ItemPage/>} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/checkout' element={<Checkout />} />
       </Routes>
+
+      <Footer/>
+    </>
+      
   );
 }
 

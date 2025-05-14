@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { itemList } from "./itemList";
+import { itemList } from "../itemList";
 
 
 export const StoreContext = createContext();

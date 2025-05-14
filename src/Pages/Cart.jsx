@@ -1,6 +1,6 @@
 
 import React, { useContext } from 'react';
-import { StoreContext } from './ContextAPI';
+import { StoreContext } from '../Context/ContextAPI';
 import { useNavigate } from 'react-router-dom';
 import { Container, Navbar, Button, Row, Col, Card } from 'react-bootstrap';
 
@@ -67,12 +67,12 @@ const Cart = () => {
                                 <div className='d-flex justify-content-between'>
                                     <p className='fw-bold'>Total Amount:</p>
                                     <p>₹ {getTotalAmount() + 0} </p></div>
-                                <Button variant="success" className='w-100 mt-4'>GO TO CHECKOUT</Button>
+                                <Button variant="success" className='w-100 mt-4' onClick={() => navigate('/checkout')}>GO TO CHECKOUT</Button>
                             </Card.Body>
                         </Card>
                     </>
                 ) : (
-                    <h4 className='text-center mt-4 pt-4'>Oops! Your Kartify Cart is empty</h4>
+                    <h4 className='text-center mt-4 pt-4 vh-100'>Oops! Your Kartify Cart is empty</h4>
                 )
             }
 
