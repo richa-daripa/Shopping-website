@@ -1,109 +1,75 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StoreContext } from '../Context/ContextAPI';
+import { Modal, Button } from 'react-bootstrap';
+import { useNavigate} from 'react-router-dom';
 
 const Checkout = () => {
+  const { cartItems, itemList,  setCartItems, getTotalAmount } = useContext(StoreContext);
+  const [showPlacedOrder, setShowPlacedOrder] = useState(false);
+  const navigate = useNavigate();
 
-    const {getTotalAmount, totalQuantity} = useContext(StoreContext);
+  const handleOrder=()=>{
+    navigate('/');
+    setCartItems({});
+  }
 
-    return (
-        <div className='container mt-4 vh-100'>
+  return (
+    <div className="container mt-4 text-center">
+      <h2 className="mt-4 mb-4 text-center p-5 mt-4">Your Order Summary</h2>
+      <table className="table table-bordered table-striped table-hover ">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price per item(₹)</th>
+          </tr>
+        </thead>
+        <tbody className="table-group-divider">
+          {itemList
+            .filter((item) => cartItems[item.id] > 0)
+            .map((item, index) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>
+                  <img src={item.image} alt={item.name} width="100" />
+                </td>
+                <td>{cartItems[item.id]}</td>
+                <td>{item.price}</td>
+              </tr>
+            ))}
 
-            <h2 className='mt-4 mb-4 text-center p-2 mt-4' >Checkout form</h2>
-
-            <div class="row mt-4">
-                <div class="col-md-4 order-md-2 mb-4">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Your cart </span>
-                        <span class="badge badge-secondary badge-pill">{totalQuantity()}</span>
-                    </h4>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Subtotal</h6>
-                            </div>
-                            <span class="text-muted">₹{getTotalAmount()}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Shipping fee</h6>
-                                <small class="text-muted">Free on first order</small>
-                            </div>
-                            <span class="text-muted">₹0</span>
-                        </li>
-                        
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total Amount</span>
-                            <strong>₹{getTotalAmount() + 0}</strong>
-                        </li>
-                    </ul>
-                     <button class="btn btn-success btn btn-block w-100" type="submit">PROCEED TO PAY</button>
-                </div>
-
-                <div class="col-md-8 order-md-1">
-                    <h4 class="mb-3">Billing address</h4>
-                    <form >
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="firstName">First name</label>
-                                <input type="text" class="form-control" required />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="lastName">Last name</label>
-                                <input type="text" class="form-control"  required/>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control"  placeholder="you@example.com" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="address">Address line 1</label>
-                            <input type="text" class="form-control" placeholder="Apartment,Block,Street" required="" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="address2">Address line 2 <small class="text-muted">(Optional)</small></label>
-                            <input type="text" class="form-control" id="address2" placeholder="Area,Location,Landmark" />
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-5 mb-3">
-                                <label for="country">Country</label>
-                                <input type="text" class="form-control"  placeholder="India" readOnly/>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="state">State</label>
-                                <select class="custom-select d-block w-100 p-1"  required>
-                                    <option value="">Select</option>
-                                    <option>Chennai</option>
-                                    <option>Mumbai</option>
-                                    <option>Bengaluru</option>
-                                    <option>Hyderabad</option>
-                                </select>
-                                
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="zip">Zip</label>
-                                <input type="text" class="form-control" required />
-                            </div>
-                        </div>
-                        <hr class="mb-4" />
-                        <div class="custom-control custom-checkbox ">
-                            <input type="checkbox" class="custom-control-input me-2"  />
-                            <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input me-2" />
-                            <label class="custom-control-label" for="save-info">Save this information for next time</label>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        
-    )
-}
+          <tr>
+            <td colSpan={3} className="text-end fw-bold">
+              Total Amount
+            </td>
+            <td className="fw-bold">{getTotalAmount()}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="d-flex align-items-center justify-content-center gap-4 mt-5">
+        <Button variant="success" onClick={() => navigate('/cart')}>
+          Back to Cart
+        </Button>
+        <Button variant="success" onClick={()=>setShowPlacedOrder(true)}>Place Order</Button>
+      </div>
+      <Modal
+        show={showPlacedOrder}
+        onHide={() => setShowPlacedOrder(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Body className="p-4 bg-success-subtle">
+          <div className="text-center">
+            <h5>Your order has been placed successfully</h5>
+          </div>
+          <div className='d-flex justify-content-center align-items-center mt-4'>
+            <Button className="bg-success" onClick={handleOrder}>Back to Home</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
 
 export default Checkout;

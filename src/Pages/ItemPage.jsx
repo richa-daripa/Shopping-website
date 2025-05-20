@@ -17,10 +17,10 @@ const ItemPage = () => {
                         Kartify
                     </Navbar.Brand>
                     <div className="d-flex gap-3">
-                        <Button className="bg-success-subtle border-0 text-success position-relative" onClick={() => navigate('/cart')}><i class="bi bi-cart3 me-2 fs-5"></i>My Cart
-                            <span class="position-absolute top-0 start-100 translate-middle  bg-primary text-white rounded-circle fw-bold d-flex align-items-center justify-content-center" style={{ width: "24px", height: "24px", fontSize: "14px" }}>
+                        <Button className="bg-success-subtle border-0 text-success position-relative" onClick={() => navigate('/cart')}><i className="bi bi-cart3 me-2 fs-5"></i>My Cart
+                            <span className="position-absolute top-0 start-100 translate-middle  bg-primary text-white rounded-circle fw-bold d-flex align-items-center justify-content-center" style={{ width: "24px", height: "24px", fontSize: "14px" }}>
                                 {totalQuantity()}
-                                <span class="visually-hidden">unread messages</span>
+                                <span className="visually-hidden">unread messages</span>
                             </span>
                         </Button>
                     </div>
