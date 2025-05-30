@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, {  useContext } from 'react';
 import { StoreContext } from '../Context/ContextAPI';
-import { Modal, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useNavigate} from 'react-router-dom';
+import '../style.css';
 
 const Checkout = () => {
   const { cartItems, itemList,  setCartItems, getTotalAmount } = useContext(StoreContext);
-  const [showPlacedOrder, setShowPlacedOrder] = useState(false);
   const navigate = useNavigate();
 
   const handleOrder=()=>{
@@ -14,15 +14,20 @@ const Checkout = () => {
   }
 
   return (
-    <div className="container mt-4 text-center">
-      <h2 className="mt-4 mb-4 text-center p-5 mt-4">Your Order Summary</h2>
-      <table className="table table-bordered table-striped table-hover ">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Product</th>
+    <div className="container">
+      <div className="d-flex flex-column justify-content-center align-items-center gap-4 mt-4">
+      <i class="bi bi-check-circle-fill icon-size text-success mt-4"></i>
+      <h2 className="mb-4 text-center fw-bold">Thank you for your purchase</h2>
+      
+        <div className="container w-75 border shadow-sm py-2 px-4 rounded-3 bg-success-subtle">
+        <p className="fs-4 text-success">Order Summary</p>
+      <table className="table table-bordered bg-success border-success table-sm mx-auto">
+        <thead >
+          <tr >
+            <th>Product Name</th>
             <th>Quantity</th>
             <th>Price per item(₹)</th>
+            <th>Subtotal</th>
           </tr>
         </thead>
         <tbody className="table-group-divider">
@@ -31,43 +36,25 @@ const Checkout = () => {
             .map((item, index) => (
               <tr key={item.id}>
                 <td>{item.name}</td>
-                <td>
-                  <img src={item.image} alt={item.name} width="100" />
-                </td>
                 <td>{cartItems[item.id]}</td>
                 <td>{item.price}</td>
+                <td>{cartItems[item.id]*item.price}</td>
               </tr>
             ))}
 
           <tr>
             <td colSpan={3} className="text-end fw-bold">
-              Total Amount
+              Total Amount (₹)
             </td>
             <td className="fw-bold">{getTotalAmount()}</td>
           </tr>
         </tbody>
       </table>
-      <div className="d-flex align-items-center justify-content-center gap-4 mt-5">
-        <Button variant="success" onClick={() => navigate('/cart')}>
-          Back to Cart
+        </div>
+        <Button variant="success" onClick={handleOrder}>
+          Back to Home
         </Button>
-        <Button variant="success" onClick={()=>setShowPlacedOrder(true)}>Place Order</Button>
       </div>
-      <Modal
-        show={showPlacedOrder}
-        onHide={() => setShowPlacedOrder(false)}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Body className="p-4 bg-success-subtle">
-          <div className="text-center">
-            <h5>Your order has been placed successfully</h5>
-          </div>
-          <div className='d-flex justify-content-center align-items-center mt-4'>
-            <Button className="bg-success" onClick={handleOrder}>Back to Home</Button>
-          </div>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 };

@@ -7,6 +7,9 @@ export const StoreContext = createContext();
 const StoreProvider = (props) => {
 
   const [cartItems, setCartItems] = useState({});
+  const [delConfirm, showDelConfirm] = useState(false);
+  const [delItem, setDelItem] = useState(null);
+
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {
@@ -28,11 +31,30 @@ const StoreProvider = (props) => {
     });
   }
 
+  /*
   const handleDelete = (itemId) => {
     setCartItems((prev) => {
-      const { [itemId]: _, ...newItems } = prev;
+      // const { [itemId]: _, ...newItems } = prev;
+      const newItems = { ...prev };
+      delete newItems[itemId];
+
       return newItems;
     });
+  }
+    */
+
+  const handleDelete = () => {
+    showDelConfirm(false);
+    setCartItems((prev) => {
+      const newItems = { ...prev };
+      delete newItems[delItem];
+      return newItems;
+    });
+  };
+
+  const handleDeleteConfirm = (itemId) => {
+    setDelItem(itemId);
+    showDelConfirm(true);
   }
 
   const getTotalAmount = () => {
@@ -46,11 +68,11 @@ const StoreProvider = (props) => {
     return totalAmount;
   }
 
-  const totalQuantity=()=>{
-    let qtotal=0;
-    for(const i in cartItems){
-      if(cartItems[i]>0){
-        qtotal+=cartItems[i];
+  const totalQuantity = () => {
+    let qtotal = 0;
+    for (const i in cartItems) {
+      if (cartItems[i] > 0) {
+        qtotal += cartItems[i];
       }
     }
     return qtotal;
@@ -63,7 +85,10 @@ const StoreProvider = (props) => {
     addToCart,
     removeFromCart,
     getTotalAmount,
-    handleDelete,
+   handleDelete,
+    handleDeleteConfirm,
+    delConfirm,
+    showDelConfirm,
     totalQuantity
   }
 
