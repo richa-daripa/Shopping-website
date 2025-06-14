@@ -12,8 +12,6 @@ const ItemPage = ({category,setCategory}) => {
   const [show, setShow] = useState(false);
   const [visibleItemCount, setVisibleItemCount] = useState(8);
 
-  
-
   const handleLoadMore = () => {
     setVisibleItemCount((prev) => prev + 6);
   }
@@ -59,7 +57,7 @@ const ItemPage = ({category,setCategory}) => {
       {itemList.length > 0 ? (
         <Container className="mt-5 mb-5">
           <Dropdown align="end" className='end-0 mb-4 d-flex justify-content-end '>
-            <Dropdown.Toggle variant="outline-success" >
+            <Dropdown.Toggle variant="outline-success">
               Category 
             </Dropdown.Toggle>
 
