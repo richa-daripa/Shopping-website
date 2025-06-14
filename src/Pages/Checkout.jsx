@@ -36,7 +36,7 @@ const Checkout = () => {
                     />
                     <div className="flex-grow-1 ms-3">
                       <h5>{item.name}</h5>
-                      <p>Quantity: {cartItems[item.id]}</p>
+                      <p>Qty: {cartItems[item.id]}</p>
                       <small>Price: ₹{item.price}</small>
                     </div>
                     <span className="fw-bold me-2">

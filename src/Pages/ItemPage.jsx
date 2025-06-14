@@ -2,14 +2,17 @@ import React, { useState, useContext } from 'react';
 import { StoreContext } from '../Context/ContextAPI';
 import { useNavigate } from 'react-router-dom';
 import ItemCard from '../Component/ItemCard';
-import { Container, Row, Navbar, Button, Toast } from 'react-bootstrap';
+import { Container, Row, Navbar, Button, Toast,Dropdown } from 'react-bootstrap';
 import '../style.css';
+import { category_list } from '../itemList';
 
-const ItemPage = () => {
+const ItemPage = ({category,setCategory}) => {
   const { itemList, totalQuantity } = useContext(StoreContext);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [visibleItemCount, setVisibleItemCount] = useState(8);
+
+  
 
   const handleLoadMore = () => {
     setVisibleItemCount((prev) => prev + 6);
@@ -55,9 +58,24 @@ const ItemPage = () => {
 
       {itemList.length > 0 ? (
         <Container className="mt-5 mb-5">
+          <Dropdown align="end" className='end-0 mb-4 d-flex justify-content-end '>
+            <Dropdown.Toggle variant="outline-success" >
+              Category 
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {
+                category_list.map((cat,index)=>(
+                  <Dropdown.Item onClick={()=>setCategory((prev)=>prev===cat?"All":cat)} active={category===cat}>{cat}</Dropdown.Item>
+                ))
+              }
+            </Dropdown.Menu>
+          </Dropdown>
+
           <Row xs={1} sm={2} md={3} className="g-5">
-            {itemList.slice(0, visibleItemCount).map((i, index) => (
-              <ItemCard
+            {itemList.slice(0, visibleItemCount).map((i, index) => {
+              if(category==="All" || category===i.category){
+                return (<ItemCard
                 key={i.id}
                 id={i.id}
                 name={i.name}
@@ -65,7 +83,12 @@ const ItemPage = () => {
                 price={i.price}
                 setShow={setShow}
               />
-            ))}
+                );
+              }
+              return null;
+            }
+              
+            )}
           </Row>
           {
             visibleItemCount < itemList.length && (

@@ -147,7 +147,7 @@ const Cart = () => {
               <img src={delItemImage} alt="Item to be removed" className="img-fluid w-25 h-25" />
             )}
             <div className='d-flex flex-column align-items-start ms-4 gap-2'>
-              <h5>Remove From Cart</h5>
+              <h5>Remove from Cart?</h5>
               <p>Are you sure you want to remove this item from your cart?</p>
             </div>
           </div>
