@@ -35,7 +35,7 @@ const Checkout = () => {
                       className="img-size"
                     />
                     <div className="flex-grow-1 ms-3">
-                      <h5>{item.name}</h5>
+                      <h5 className='me-2'>{item.name}</h5>
                       <p>Qty: {cartItems[item.id]}</p>
                       <small>Price: ₹{item.price}</small>
                     </div>

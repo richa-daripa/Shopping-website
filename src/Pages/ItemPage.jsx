@@ -2,19 +2,23 @@ import React, { useState, useContext } from 'react';
 import { StoreContext } from '../Context/ContextAPI';
 import { useNavigate } from 'react-router-dom';
 import ItemCard from '../Component/ItemCard';
-import { Container, Row, Navbar, Button, Toast,Dropdown } from 'react-bootstrap';
+import { Container, Row, Navbar, Button, Toast, Dropdown } from 'react-bootstrap';
 import '../style.css';
 import { category_list } from '../itemList';
 
-const ItemPage = ({category,setCategory}) => {
+const ItemPage = ({ category, setCategory }) => {
   const { itemList, totalQuantity } = useContext(StoreContext);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [visibleItemCount, setVisibleItemCount] = useState(8);
+  const [order, setOrder] = useState(null);
 
   const handleLoadMore = () => {
     setVisibleItemCount((prev) => prev + 6);
   }
+
+  const filteredItems = itemList.filter((i) => category === "All" || category === i.category); // Filter items first
+  const sortedItems = order ? [...filteredItems].sort((a, b) => order === 'asc' ? a.price - b.price : b.price - a.price) : filteredItems;
 
   return (
     <>
@@ -56,24 +60,38 @@ const ItemPage = ({category,setCategory}) => {
 
       {itemList.length > 0 ? (
         <Container className="mt-5 mb-5">
-          <Dropdown align="end" className='end-0 mb-4 d-flex justify-content-end '>
-            <Dropdown.Toggle variant="outline-success">
-              Category 
-            </Dropdown.Toggle>
+          <div className='d-flex justify-content-end gap-2'>
+            <Dropdown align="end" className='end-0 mb-4  '>
+              <Dropdown.Toggle variant="outline-success">
+                Sort By
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              {
-                category_list.map((cat,index)=>(
-                  <Dropdown.Item onClick={()=>setCategory((prev)=>prev===cat?"All":cat)} active={category===cat}>{cat}</Dropdown.Item>
-                ))
-              }
-            </Dropdown.Menu>
-          </Dropdown>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setOrder(null)} active={order === null}>Default Order</Dropdown.Item>
+                <Dropdown.Item onClick={() => setOrder('asc')} active={order === 'asc'}>Price: Low to High</Dropdown.Item>
+                <Dropdown.Item onClick={() => setOrder('desc')} active={order === 'desc'}>Price: High to Low</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+
+            <Dropdown align="end" className='end-0 mb-4 d-flex justify-content-end '>
+              <Dropdown.Toggle variant="outline-success">
+                Category
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {
+                  category_list.map((cat, index) => (
+                    <Dropdown.Item onClick={() => setCategory((prev) => prev === cat ? "All" : cat)} active={category === cat}>{cat}</Dropdown.Item>
+                  ))
+                }
+              </Dropdown.Menu>
+            </Dropdown>
+
+          </div>
 
           <Row xs={1} sm={2} md={3} className="g-5">
-            {itemList.slice(0, visibleItemCount).map((i, index) => {
-              if(category==="All" || category===i.category){
-                return (<ItemCard
+            {sortedItems.slice(0, visibleItemCount).map((i, index) => (
+              <ItemCard
                 key={i.id}
                 id={i.id}
                 name={i.name}
@@ -81,15 +99,11 @@ const ItemPage = ({category,setCategory}) => {
                 price={i.price}
                 setShow={setShow}
               />
-                );
-              }
-              return null;
-            }
-              
+            )
             )}
           </Row>
           {
-            visibleItemCount < itemList.length && (
+            visibleItemCount < filteredItems.length && (
               <div className="text-center mt-5">
                 <Button className=" border-1 rounded-0 bg-light text-secondary" onClick={handleLoadMore}>Load More</Button>
               </div>

@@ -39,7 +39,7 @@ const Cart = () => {
                             height="150"
                           />
                           <div className="flex-grow-1">
-                            <h5>{item.name}</h5>
+                            <h5 className='me-5'>{item.name}</h5>
                             <p>Price: ₹{item.price}</p>
                             <div className="d-flex align-items-center">
                               <Button

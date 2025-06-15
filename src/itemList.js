@@ -151,5 +151,5 @@ export const itemList = [
 
 
 export const category_list=[
-  'All','Appliances','Home Essentials','Interior Decor','Kitchenware',
+  'Appliances','Home Essentials','Interior Decor','Kitchenware',
 ];
